@@ -13,51 +13,48 @@ import com.andrelake.person_api.mapper.PersonMapper;
 import com.andrelake.person_api.model.Person;
 import com.andrelake.person_api.repo.PersonRepository;
 
-import lombok.AllArgsConstructor;
-
 @Service
-@AllArgsConstructor
 public class PersonService {
 	
-//	@Autowired
-//	private PersonRepository repository;
-//	
-//	private final PersonMapper mapper = PersonMapper.INSTANCE;
-//	
-//	public List<PersonDTO> findAll() {
-//		
-//		List<Person> allpeople = repository.findAll();
-//		
-//		return allpeople.stream()
-//				.map(mapper::toDTO)
-//				.collect(Collectors.toList());
-//	}
-//	
-//	public MessageResponseDTO createPerson(PersonDTO personDTO) {
-//		
-//		Person personToSave = mapper.toModel(personDTO);
-//		Person savedPerson = repository.save(personToSave);
-//		
-//		return createMessageResponse(savedPerson.getId(),
-//				"Person created with ID ");
-//	}
-//	
-//	public PersonDTO findById(Long id) throws PersonNotFoundException {
-//		Person person = verifyIfExists(id);
-//		
-//		return mapper.toDTO(person);
-//	}
-//
-//	private Person verifyIfExists(Long id) throws PersonNotFoundException {
-//		return repository.findById(id)
-//				.orElseThrow(() -> new PersonNotFoundException(id));
-//	}
-//
-//	private MessageResponseDTO createMessageResponse(Long id, String message) {
-//		return MessageResponseDTO
-//				.builder()
-//				.message(message + id)
-//				.build();
-//	}
+	@Autowired
+	private PersonRepository repository;
+	
+	@Autowired
+	private PersonMapper mapper;
+	
+	public List<PersonDTO> findAll() {
+		
+		List<Person> allpeople = repository.findAll();
+		
+		return allpeople.stream()
+				.map(mapper::toDTO)
+				.collect(Collectors.toList());
+	}
+	
+	public MessageResponseDTO createPerson(PersonDTO personDTO) {
+		
+		Person personToSave = mapper.toModel(personDTO);
+		Person savedPerson = repository.save(personToSave);
+		
+		return createMessageResponse(savedPerson.getId(),
+				"Person created with ID ");
+	}
+	
+	public PersonDTO findById(Long id) throws PersonNotFoundException {
+		Person person = verifyIfExists(id);
+		
+		return mapper.toDTO(person);
+	}
 
+	private Person verifyIfExists(Long id) throws PersonNotFoundException {
+		return repository.findById(id)
+				.orElseThrow(() -> new PersonNotFoundException(id));
+	}
+
+	private MessageResponseDTO createMessageResponse(Long id, String message) {
+		return MessageResponseDTO
+				.builder()
+				.message(message + id)
+				.build();
+	}
 }
