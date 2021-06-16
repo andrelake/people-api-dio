@@ -23,18 +23,15 @@ import com.andrelake.person_api.dto.res.MessageResponseDTO;
 import com.andrelake.person_api.exception.PersonNotFoundException;
 import com.andrelake.person_api.service.PersonService;
 
+import lombok.AllArgsConstructor;
+
 @RestController
 @RequestMapping("/api/v1/people")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonController {
 	
 	private PersonService service;
 	
-	@Autowired
-	public PersonController(PersonService service) {
-		this.service = service;
-	}
-
-
 	@GetMapping
 	public List<PersonDTO> listAll() {
 		
